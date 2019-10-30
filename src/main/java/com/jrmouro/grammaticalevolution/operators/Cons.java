@@ -3,17 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jrmouro.grammaticalevolution;
+package com.jrmouro.grammaticalevolution.operators;
 
 /**
  *
  * @author ronaldo
  */
-public class Const implements Op{
+public class Cons implements Op{
     
     double c;
     
-    public Const(double c){
+    public Cons(double c){
         this.c = c;
     }
         
@@ -49,7 +49,7 @@ public class Const implements Op{
 
     @Override
     public Op getCopy() {
-        return new Const(this.c);
+        return new Cons(this.c);
     }
     
     

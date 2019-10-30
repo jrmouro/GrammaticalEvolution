@@ -3,35 +3,31 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jrmouro.grammaticalevolution;
+package com.jrmouro.grammaticalevolution.operators;
 
 /**
  *
  * @author ronaldo
  */
-public class Subtraction extends Nop {
+public class Sub extends Nop {
 
     @Override
     public double aval() {
-        if (this.children.size() < 1) {
-            return 0.0;
-        } else if (this.children.size() < 2) {
+        if (this.children.size() < 1 || Double.isNaN(this.children.get(0).aval())) {
+            return 1.0;
+        } else if (this.children.size() < 2 || Double.isNaN(this.children.get(1).aval())) {
             return this.children.get(0).aval();
         }
         return this.children.get(0).aval() - this.children.get(1).aval();
     }
 
-    @Override
-    public boolean term() {
-        return false;
-    }
 
     @Override
     public String toString() {
 
-        if (this.children.size() < 1) {
-            return "";
-        } else if (this.children.size() < 2) {
+        if (this.children.size() < 1 || Double.isNaN(this.children.get(0).aval())) {
+            return "1.0";
+        } else if (this.children.size() < 2 || Double.isNaN(this.children.get(1).aval())) {
             return this.children.get(0).toString();
         }
 
@@ -45,6 +41,6 @@ public class Subtraction extends Nop {
     
     @Override
     public Op getCopy(){
-        return new Subtraction();
+        return new Sub();
     }
 }

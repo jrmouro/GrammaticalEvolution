@@ -3,16 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jrmouro.grammaticalevolution;
+package com.jrmouro.grammaticalevolution.operators;
 
 /**
  *
  * @author ronaldo
  */
-public class ConstOne extends Const {
+public class Pi extends Cons{
 
-    public ConstOne() {
-        super(1.0);
-    }  
+    public Pi() {
+        super(3.14159265359);
+    }
+
+    @Override
+    public String toString() {
+        return "PI";
+    }
 
 }

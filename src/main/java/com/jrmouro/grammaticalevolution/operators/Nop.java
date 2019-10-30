@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jrmouro.grammaticalevolution;
+package com.jrmouro.grammaticalevolution.operators;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -20,7 +20,10 @@ public abstract class Nop implements Op, Iterable<Op> {
     @Override
     public void add(Op o) {
         if (!this.term() && this.nrOp() > this.children.size()) {
-            this.children.add(o);
+            if(o == null || Double.isNaN(o.aval()))
+                this.children.add(new Nil());
+            else
+                this.children.add(o);
         }
     }
 
@@ -39,11 +42,9 @@ public abstract class Nop implements Op, Iterable<Op> {
 
     @Override
     public boolean term() {
-        return false;
+        //return false;
+        return this.nrOp() == 0;
     }
-    
-    
-    
-    
+
     
 }

@@ -3,7 +3,21 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-import com.jrmouro.grammaticalevolution.*;
+import com.jrmouro.grammaticalevolution.operators.Div;
+import com.jrmouro.grammaticalevolution.operators.Sub;
+import com.jrmouro.grammaticalevolution.operators.Op;
+import com.jrmouro.grammaticalevolution.operators.Cos;
+import com.jrmouro.grammaticalevolution.operators.Sin;
+import com.jrmouro.grammaticalevolution.operators.Var;
+import com.jrmouro.grammaticalevolution.operators.One;
+import com.jrmouro.grammaticalevolution.operators.Sum;
+import com.jrmouro.grammaticalevolution.operators.Mult;
+import com.jrmouro.grammaticalevolution.operators.Less;
+import com.jrmouro.grammaticalevolution.operators.Ln;
+import com.jrmouro.grammaticalevolution.operators.VarOp;
+import com.jrmouro.grammaticalevolution.operators.ExpE;
+import com.jrmouro.grammaticalevolution.operators.GeneratorOp;
+import com.jrmouro.grammaticalevolution.operators.Pi;
 import org.junit.Test;
 
 /**
@@ -21,13 +35,32 @@ public class TestJUnitTest {
     @Test
     public void test() {
         
-        Var var = new Var("X", 1);
         
-        Op[] ops = {new Sum(), new ConstOne(), new Sin(), new VarOp(var)};
         
-        int[] v = {0, 3, 2, 4, 5, 7};
+        Var var = new Var("x", 1);
         
-        Op op = Op.ger(v, 0, ops);
+        Op[] ops = {
+            new Sum(), 
+            new Sub(),
+            new One(), 
+            new Pi(),
+            new ExpE(),
+            new Less(), 
+            new Sin(), 
+            new Cos(),
+            new VarOp(var), 
+            new VarOp(var), 
+            new VarOp(var), 
+            new Mult(), 
+            new Div(),
+            new Ln()};
+        
+        Integer[] v = {123, 59, 125, 15, 38, 83, 43, 66, 76, 67};
+        
+        
+        GeneratorOp g = new GeneratorOp(ops);
+        
+        Op op = g.generate(v);
         
                 
         

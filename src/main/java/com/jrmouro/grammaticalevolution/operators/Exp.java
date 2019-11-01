@@ -49,7 +49,7 @@ public class Exp extends Nop{
         } 
         
        
-        return String.valueOf(this.children.get(0).toString() + "^" + this.children.get(1).toString());
+        return String.valueOf(this.children.get(0).toString() + "**" + this.children.get(1).toString());
         
     }
 }

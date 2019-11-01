@@ -29,7 +29,7 @@ public class ExpE  extends ExpB{
 
         //if(this.children.get(0).term())
             //return "exp_e(" + this.children.get(0).toString() + ")";
-        return "e^" + this.children.get(0).toString();
+        return "exp(" + this.children.get(0).toString() + ")";
         //return "exp_e " + this.children.get(0).toString();
     }
 }

@@ -16,7 +16,6 @@ import com.jrmouro.grammaticalevolution.operators.ExpE;
 import com.jrmouro.grammaticalevolution.operators.GeneratorOp;
 import com.jrmouro.grammaticalevolution.operators.Less;
 import com.jrmouro.grammaticalevolution.operators.Ln;
-import com.jrmouro.grammaticalevolution.operators.Log;
 import com.jrmouro.grammaticalevolution.operators.Mult;
 import com.jrmouro.grammaticalevolution.operators.One;
 import com.jrmouro.grammaticalevolution.operators.Op;
@@ -26,6 +25,13 @@ import com.jrmouro.grammaticalevolution.operators.Sub;
 import com.jrmouro.grammaticalevolution.operators.Sum;
 import com.jrmouro.grammaticalevolution.operators.Var;
 import com.jrmouro.grammaticalevolution.operators.VarOp;
+import com.jrmouro.plot.CanonicalPath;
+import com.jrmouro.plot.FunctionPlottable;
+import com.jrmouro.plot.Plottable;
+import com.jrmouro.plot.PointsFunctionPlottable;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -58,7 +64,7 @@ public class GEJUnitTest {
     }
 
     @Test
-    public void test() {
+    public void test() throws IOException {
 
         double[][] dados
                 = {
@@ -78,10 +84,6 @@ public class GEJUnitTest {
 
         Op[] ops = {
             new VarOp(var), 
-            //new VarOp(var), 
-            //new VarOp(var), 
-            //new Sum(), 
-            //new Sum(), 
             new Sum(), 
             new Sub(),
             new One(), 
@@ -90,7 +92,6 @@ public class GEJUnitTest {
             new Less(), 
             new Sin(), 
             new Cos(),
-            new Log(),
             new Mult(), 
             new Div(),
             new ExpE(),
@@ -134,15 +135,15 @@ public class GEJUnitTest {
         IntegerGeneticAlgorithm ga = new IntegerGeneticAlgorithm(50, //population size
                 60, //population limit
                 fitI, // fitness function
-                20, //chromosome size
+                10, //chromosome size
                 0, // left bound chromosome
-                140, // right bound chormosome
-                new IntegerStoppingCondition(600),
+                130000, // right bound chormosome
+                new IntegerStoppingCondition(1200),
                 5, // crossover points
                 .3, // crossover rate
                 .3, // mutation rate
-                .3, // mutation arity
-                3); // selection arity
+                .2, // mutation rate2
+                10); // selection arity
 
         IntegerChromosome c = ga.run();
         Integer[] v = new Integer[c.getRepresentation().size()];
@@ -155,10 +156,36 @@ public class GEJUnitTest {
         Op op = generator.generate(v);
         System.out.println(c);
         System.out.println(op);
-        var.value = 20.75;
-        System.out.println(op.aval());
         
-       
+        
+        List<String> sets = new ArrayList();        
+                
+        sets.add("title 'Test'");
+        sets.add("xlabel 'time'");
+        sets.add("ylabel 'volume'");
+        sets.add("grid");
+        sets.add("xrange [0:100]");
+        sets.add("yrange [0:20]");
+        sets.add("style line 1 lc rgb '#0060ad' pt 7 ps 0.5 lt 1 lw 2");
+        
+        
+        Plottable p = new PointsFunctionPlottable(
+                dados, 
+                op.toString(), 
+                sets, 
+                CanonicalPath.getPath("data.txt"),
+                CanonicalPath.getPath("rep.plot"));
+        
+        p.plot();
+        
+        
+        List<String> functions = new ArrayList();
+        functions.add("log(x**3) + sin(x)");
+        functions.add(op.toString());
+    
+        Plottable p2 = new FunctionPlottable(functions, sets, CanonicalPath.getPath("rep2.plot"));
+        p2.plot();
+        
         
         
 

@@ -17,7 +17,7 @@ public class Pi extends Cons{
 
     @Override
     public String toString() {
-        return "PI";
+        return "pi";
     }
 
 }

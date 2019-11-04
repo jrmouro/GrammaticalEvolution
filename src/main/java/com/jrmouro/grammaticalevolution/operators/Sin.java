@@ -9,13 +9,21 @@ package com.jrmouro.grammaticalevolution.operators;
  *
  * @author ronaldo
  */
-public class Sin extends Nop {
+public class Sin extends EscOne {
+    
+    public Sin() {
+        super(1.0);
+    }
+    
+    public Sin(double esc) {
+        super(esc);
+    }
 
     @Override
     public double aval() {
-        if (this.children.size() < 1 || Double.isNaN(this.children.get(0).aval())) {
-            return 1.0;
-        }
+        
+        if(escape()[0])
+            return super.aval(); 
 
         return Math.sin(this.children.get(0).aval());
     }
@@ -23,23 +31,15 @@ public class Sin extends Nop {
     @Override
     public String toString() {
         
-        if (this.children.size() < 1 || Double.isNaN(this.children.get(0).aval())) {
-            return "1.0";
-        }
+        if(escape()[0])
+            return super.toString(); 
 
-        //if(this.children.get(0).term())
-            return "sin(" + this.children.get(0).toString() + ")";
-        
-        //return "sin " + this.children.get(0).toString();
-    }
+        return "sin(" + this.children.get(0).toString() + ")";
 
-    @Override
-    public int nrOp() {
-        return 1;
     }
     
     @Override
     public Op getCopy(){
-        return new Sin();
+        return new Sin(esc);
     }
 }

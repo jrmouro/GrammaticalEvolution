@@ -9,14 +9,14 @@ package com.jrmouro.grammaticalevolution.operators;
  *
  * @author ronaldo
  */
-public class Cons implements Op{
-    
+public class Cons implements Op {
+
     double c;
-    
-    public Cons(double c){
+
+    public Cons(double c) {
         this.c = c;
     }
-        
+
     @Override
     public double aval() {
         return c;
@@ -24,6 +24,11 @@ public class Cons implements Op{
 
     @Override
     public String toString() {
+
+        if (c < 0.0) {
+            return "(" + String.valueOf(c) + ")";
+        }
+        
         return String.valueOf(c);
     }
 
@@ -51,7 +56,5 @@ public class Cons implements Op{
     public Op getCopy() {
         return new Cons(this.c);
     }
-    
-    
-    
+
 }

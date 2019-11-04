@@ -58,7 +58,7 @@ public class TestJUnitTest {
         Integer[] v = {123, 59, 125, 15, 38, 83, 43, 66, 76, 67};
         
         
-        GeneratorOp g = new GeneratorOp(ops);
+        GeneratorOp g = new GeneratorOp(ops, var);
         
         Op op = g.generate(v);
         

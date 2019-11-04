@@ -14,15 +14,19 @@ package com.jrmouro.grammaticalevolution.operators;
 public class GeneratorOp {
     
     protected final Op[] ops;
+    final Var var;
     private Integer index = 0;
     private Integer height = Integer.MAX_VALUE;
 
-    public GeneratorOp(Op[] ops) {
+        
+    public GeneratorOp(Op[] ops, Var var) {
         this.ops = ops;
+        this.var = var;
     }
     
-    public GeneratorOp(Op[] ops, Integer height) {
+    public GeneratorOp(Op[] ops, Var var, Integer height) {
         this.ops = ops;
+        this.var = var;
         this.height = height;
     }
     
@@ -36,7 +40,7 @@ public class GeneratorOp {
     
     private Op generateAux(Integer[] vector, Integer h){
         
-        Op aux = new Nil();
+        Op aux = new VarOp(this.var);
 
         if (h <= this.height && this.index < vector.length && ops.length > 0) {
 

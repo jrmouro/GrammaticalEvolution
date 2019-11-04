@@ -8,14 +8,17 @@ import com.jrmouro.genetic.chromosome.ChromosomeAbstract;
 import com.jrmouro.genetic.fitnessfunction.FitnessFunction;
 import com.jrmouro.genetic.integer.IntegerChromosome;
 import com.jrmouro.genetic.integer.IntegerGeneticAlgorithm;
-import com.jrmouro.genetic.integer.IntegerStoppingCondition;
+import com.jrmouro.genetic.integer.VectorPointsIntegerCrossover;
+import com.jrmouro.grammaticalevolution.genetic.CompositeStoppingCondition;
 import com.jrmouro.grammaticalevolution.operators.Cos;
 import com.jrmouro.grammaticalevolution.operators.Div;
 import com.jrmouro.grammaticalevolution.operators.Exp;
+import com.jrmouro.grammaticalevolution.operators.ExpB;
 import com.jrmouro.grammaticalevolution.operators.ExpE;
 import com.jrmouro.grammaticalevolution.operators.GeneratorOp;
 import com.jrmouro.grammaticalevolution.operators.Less;
 import com.jrmouro.grammaticalevolution.operators.Ln;
+import com.jrmouro.grammaticalevolution.operators.Log10;
 import com.jrmouro.grammaticalevolution.operators.Mult;
 import com.jrmouro.grammaticalevolution.operators.One;
 import com.jrmouro.grammaticalevolution.operators.Op;
@@ -85,7 +88,17 @@ public class GEJUnitTest {
         Op[] ops = {
             new VarOp(var), 
             new Sum(), 
+            new Sum(),
+            new Sum(),
             new Sub(),
+            new Sub(),
+            new Sub(),
+            new Mult(),
+            new Mult(),
+            new Mult(),
+            new Div(),
+            new Div(),
+            new Div(),
             new One(), 
             new Pi(),
             new Exp(),
@@ -95,9 +108,12 @@ public class GEJUnitTest {
             new Mult(), 
             new Div(),
             new ExpE(),
-            new Ln()};
+            new ExpB(1.0),
+            new Ln(),
+            new Log10()
+        };
         
-        GeneratorOp generator = new GeneratorOp(ops, 4);
+        GeneratorOp generator = new GeneratorOp(ops,var, 4);
 
         FitnessFunction<Integer> fitI = new FitnessFunction<Integer>() {
 
@@ -131,19 +147,22 @@ public class GEJUnitTest {
             }
 
         };
+        
+        Integer[] vectorCrossover = {1, 3, 6, 12, 18};
 
-        IntegerGeneticAlgorithm ga = new IntegerGeneticAlgorithm(50, //population size
-                60, //population limit
+        IntegerGeneticAlgorithm ga = new IntegerGeneticAlgorithm(100, //population size
+                25, // population reuse
+                100, //population limit
                 fitI, // fitness function
-                10, //chromosome size
+                20, //chromosome size
                 0, // left bound chromosome
-                130000, // right bound chormosome
-                new IntegerStoppingCondition(1200),
-                5, // crossover points
-                .3, // crossover rate
-                .3, // mutation rate
-                .2, // mutation rate2
-                10); // selection arity
+                Integer.MAX_VALUE - 1, // right bound chormosome
+                new CompositeStoppingCondition(300, -0.1),
+                new VectorPointsIntegerCrossover(vectorCrossover),
+                .5, // crossover rate
+                .5, // mutation rate
+                .3, // mutation rate2
+                2); // selection arity
 
         IntegerChromosome c = ga.run();
         Integer[] v = new Integer[c.getRepresentation().size()];

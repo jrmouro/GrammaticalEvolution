@@ -9,38 +9,43 @@ package com.jrmouro.grammaticalevolution.operators;
  *
  * @author ronaldo
  */
-public class Sub extends Nop {
+public class Sub extends EscTwo {
 
+    public Sub() {
+        super(1.0);
+    }
+    
+    public Sub(double esc) {
+        super(esc);
+    }
+    
     @Override
     public double aval() {
-        if (this.children.size() < 1 || Double.isNaN(this.children.get(0).aval())) {
-            return 1.0;
-        } else if (this.children.size() < 2 || Double.isNaN(this.children.get(1).aval())) {
+        
+        if(this.escape()[0])        
+            return super.aval();
+        else if(this.escape()[1])
             return this.children.get(0).aval();
-        }
+        
         return this.children.get(0).aval() - this.children.get(1).aval();
+        
     }
 
 
     @Override
     public String toString() {
 
-        if (this.children.size() < 1 || Double.isNaN(this.children.get(0).aval())) {
-            return "1.0";
-        } else if (this.children.size() < 2 || Double.isNaN(this.children.get(1).aval())) {
-            return this.children.get(0).toString();
-        }
-
+        if (this.escape()[0]) {
+            return super.toString();
+        } else if (this.escape()[1]) {
+            return "("+ this.children.get(0).toString()+")";
+        } 
         return "(" + this.children.get(0).toString() + " - " + this.children.get(1).toString() + ")";
-    }
 
-    @Override
-    public int nrOp() {
-        return 2;
     }
     
     @Override
     public Op getCopy(){
-        return new Sub();
+        return new Sub(esc);
     }
 }

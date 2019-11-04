@@ -42,7 +42,6 @@ public abstract class Nop implements Op, Iterable<Op> {
 
     @Override
     public boolean term() {
-        //return false;
         return this.nrOp() == 0;
     }
 

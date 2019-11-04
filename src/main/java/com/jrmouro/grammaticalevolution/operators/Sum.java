@@ -9,14 +9,22 @@ package com.jrmouro.grammaticalevolution.operators;
  *
  * @author ronaldo
  */
-public class Sum extends Nop {
+public class Sum extends EscTwo {
+
+    public Sum() {
+        super(1.0);
+    }
+
+    public Sum(double esc) {
+        super(esc);
+    }
 
     @Override
     public double aval() {
 
-        if (this.children.size() < 1 || Double.isNaN(this.children.get(0).aval())) {
-            return 1.0;
-        } else if (this.children.size() < 2 || Double.isNaN(this.children.get(1).aval())) {
+        if (this.escape()[0]) {
+            return super.aval();
+        } else if (this.escape()[1]) {
             return this.children.get(0).aval();
         }
 
@@ -27,24 +35,18 @@ public class Sum extends Nop {
     @Override
     public String toString() {
 
-        if (this.children.size() < 1 || Double.isNaN(this.children.get(0).aval())) {
-            return "1.0";
-        } else if (this.children.size() < 2 || Double.isNaN(this.children.get(1).aval())) {
-            return this.children.get(0).toString();
+        if (this.escape()[0]) {
+            return super.toString();
+        } else if (this.escape()[1]) {
+            return "(" + this.children.get(0).toString() + ")";
         }
-
+        
         return "(" + this.children.get(0).toString() + " + " + this.children.get(1).toString() + ")";
     }
 
     @Override
-    public int nrOp() {
-        return 2;
+    public Op getCopy() {
+        return new Sum(esc);
     }
 
-    @Override
-    public Op getCopy(){
-        return new Sum();
-    }
-    
-    
 }

@@ -5,8 +5,6 @@
  */
 package com.jrmouro.grammaticalevolution.operators;
 
-import com.jrmouro.grammaticalevolution.genetic.GeneInteger;
-
 /**
  *
  * @author ronaldo

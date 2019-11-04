@@ -12,14 +12,7 @@
             <version>4.12</version>
             <scope>test</scope>
             <type>jar</type>
-        </dependency>
-        <dependency>
-            <groupId>jrmouro</groupId>
-            <artifactId>Genetic</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <scope>system</scope>
-            <systemPath>${basedir}/lib/Genetic/Genetic-2.jar</systemPath>
-        </dependency>
+        </dependency>        
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-math3</artifactId>

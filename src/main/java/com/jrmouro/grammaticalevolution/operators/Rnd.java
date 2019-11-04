@@ -3,16 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.jrmouro.grammaticalevolution.genetic;
+package com.jrmouro.grammaticalevolution.operators;
+
+import java.util.Random;
 
 /**
  *
  * @author ronaldo
  */
-public class GI3 extends GeneInteger{
+public class Rnd  extends Cons{
     
-    public GI3(int leftBound, int rightBound, double mutateRate) {
-        super(3, leftBound, rightBound, mutateRate);
+    public Rnd() {
+        super(new Random().nextDouble());
     }
     
 }

@@ -9,14 +9,21 @@ package com.jrmouro.grammaticalevolution.operators;
  *
  * @author ronaldo
  */
-public class Cos extends Nop {
+public class Cos extends EscOne {
+
+    public Cos() {
+        super(1.0);
+    }
+    
+    public Cos(double esc) {
+        super(esc);
+    }
 
     @Override
     public double aval() {
         
-        if (this.children.size() < 1 || Double.isNaN(this.children.get(0).aval())) {
-            return 1.0;
-        }
+        if(escape()[0])
+            return super.aval();       
 
         return Math.cos(this.children.get(0).aval());
     }
@@ -24,24 +31,15 @@ public class Cos extends Nop {
     @Override
     public String toString() {
         
-        if (this.children.size() < 1 || Double.isNaN(this.children.get(0).aval())) {
-            return "1.0";
-        }
+        if(escape()[0])
+            return super.toString(); 
 
-        //if(this.children.get(0).term())
-            return "cos(" + this.children.get(0).toString() + ")";
+        return "cos(" + this.children.get(0).toString() + ")";
+    }
         
-        //return "cos " + this.children.get(0).toString();
-    }
-
-    @Override
-    public int nrOp() {
-        return 1;
-    }
-    
     @Override
     public Op getCopy(){
-        return new Cos();
+        return new Cos(esc);
     }
     
 }

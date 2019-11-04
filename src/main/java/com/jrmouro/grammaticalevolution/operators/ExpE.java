@@ -10,6 +10,10 @@ package com.jrmouro.grammaticalevolution.operators;
  * @author ronaldo
  */
 public class ExpE  extends ExpB{
+    
+    public ExpE(double esc) {
+        super(2.718281828, esc);
+    }
 
     public ExpE() {
         super(2.718281828);
@@ -17,19 +21,16 @@ public class ExpE  extends ExpB{
     
     @Override
     public Op getCopy() {
-        return new ExpE();
+        return new ExpE(esc);
     }
     
      @Override
     public String toString() {
         
-        if (this.children.size() < 1 || Double.isNaN(this.children.get(0).aval())) {
-            return "1.0";
-        }
-
-        //if(this.children.get(0).term())
-            //return "exp_e(" + this.children.get(0).toString() + ")";
+        if(escape()[0])
+            return super.toString(); 
+        
         return "exp(" + this.children.get(0).toString() + ")";
-        //return "exp_e " + this.children.get(0).toString();
+        
     }
 }

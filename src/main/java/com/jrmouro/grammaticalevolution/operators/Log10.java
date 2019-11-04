@@ -9,41 +9,47 @@ package com.jrmouro.grammaticalevolution.operators;
  *
  * @author ronaldo
  */
-public class ExpB extends EscOne{
-    
-    private final double base;
+public class Log10 extends EscOne{
 
-    public ExpB(double base) {
+    public Log10() {
         super(1.0);
-        this.base = base;
     }
     
-    public ExpB(double base, double esc) {
+    public Log10(double esc) {
         super(esc);
-        this.base = base;
     }
-
+    
+    @Override
+    public boolean[] escape() {
+        boolean[] ret = {super.escape()[0]};
+        if(this.children.size() > 0)
+            ret[0] = ret[0] || this.children.get(0).aval() <= 0.0;
+        return ret;
+    }
+    
     @Override
     public double aval() {
         
         if(this.escape()[0])        
             return super.aval();
                 
-        return Math.pow(base, this.children.get(0).aval());       
+        return Math.log(this.children.get(0).aval())/Math.log(10.0);
         
+    }
+        
+    @Override
+    public Op getCopy() {
+        return new Log10(esc);
     }
     
     @Override
-    public Op getCopy() {
-        return new ExpB(this.base, esc);
-    }
-    
-     @Override
     public String toString() {
         
         if(escape()[0])
             return super.toString(); 
-
-        return "("+ String.valueOf(this.base)+ "**" + this.children.get(0).toString()+ ")";
+        
+        return "log10("+ this.children.get(0).toString()+ ")";
+        
     }
+    
 }

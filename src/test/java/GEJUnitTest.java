@@ -10,12 +10,13 @@ import com.jrmouro.genetic.integer.IntegerChromosome;
 import com.jrmouro.genetic.integer.IntegerGeneticAlgorithm;
 import com.jrmouro.genetic.integer.VectorPointsIntegerCrossover;
 import com.jrmouro.grammaticalevolution.genetic.CompositeStoppingCondition;
+import com.jrmouro.grammaticalevolution.operators.CartesianGenerator;
 import com.jrmouro.grammaticalevolution.operators.Cos;
 import com.jrmouro.grammaticalevolution.operators.Div;
 import com.jrmouro.grammaticalevolution.operators.Exp;
 import com.jrmouro.grammaticalevolution.operators.ExpB;
 import com.jrmouro.grammaticalevolution.operators.ExpE;
-import com.jrmouro.grammaticalevolution.operators.GeneratorOp;
+import com.jrmouro.grammaticalevolution.operators.Generator;
 import com.jrmouro.grammaticalevolution.operators.Less;
 import com.jrmouro.grammaticalevolution.operators.Ln;
 import com.jrmouro.grammaticalevolution.operators.Log10;
@@ -86,10 +87,10 @@ public class GEJUnitTest {
         Var var = new Var("x", 1);
 
         Op[] ops = {
-            new VarOp(var), 
-            new Sum(), 
+            new VarOp(var),
             new Sum(),
             new Sum(),
+            new Sum(),
             new Sub(),
             new Sub(),
             new Sub(),
@@ -99,21 +100,21 @@ public class GEJUnitTest {
             new Div(),
             new Div(),
             new Div(),
-            new One(), 
+            new One(),
             new Pi(),
             new Exp(),
-            new Less(), 
-            new Sin(), 
+            new Less(),
+            new Sin(),
             new Cos(),
-            new Mult(), 
+            new Mult(),
             new Div(),
             new ExpE(),
             new ExpB(1.0),
             new Ln(),
             new Log10()
         };
-        
-        GeneratorOp generator = new GeneratorOp(ops,var, 4);
+
+        Generator generator = new CartesianGenerator(ops, var, 40);
 
         FitnessFunction<Integer> fitI = new FitnessFunction<Integer>() {
 
@@ -126,8 +127,6 @@ public class GEJUnitTest {
                 for (Integer integer : ca.getRepresentation()) {
                     v[i++] = integer;
                 }
-                
-                
 
                 Op op = generator.generate(v);
 
@@ -136,29 +135,30 @@ public class GEJUnitTest {
                 for (double[] dado : dados) {
                     var.value = dado[0];
                     double a = op.aval();
-                    
+
                     ret -= ((a - dado[1]) * (a - dado[1]));
-                    
-                    if(Double.isNaN(ret))
+
+                    if (Double.isNaN(ret)) {
                         return -Double.MAX_VALUE;
+                    }
                 }
 
                 return ret;
             }
 
         };
-        
-        Integer[] vectorCrossover = {1, 3, 6, 12, 18};
 
-        IntegerGeneticAlgorithm ga = new IntegerGeneticAlgorithm(100, //population size
-                25, // population reuse
+        //Integer[] vectorCrossover = {1, 3, 6, 12, 18};
+        IntegerGeneticAlgorithm ga = new IntegerGeneticAlgorithm(
+                100, //population size
+                5, // population reuse
                 100, //population limit
                 fitI, // fitness function
-                20, //chromosome size
+                100, //chromosome size
                 0, // left bound chromosome
                 Integer.MAX_VALUE - 1, // right bound chormosome
                 new CompositeStoppingCondition(300, -0.1),
-                new VectorPointsIntegerCrossover(vectorCrossover),
+                new VectorPointsIntegerCrossover(100, 1),
                 .5, // crossover rate
                 .5, // mutation rate
                 .3, // mutation rate2
@@ -175,10 +175,9 @@ public class GEJUnitTest {
         Op op = generator.generate(v);
         System.out.println(c);
         System.out.println(op);
-        
-        
-        List<String> sets = new ArrayList();        
-                
+
+        List<String> sets = new ArrayList();
+
         sets.add("title 'Test'");
         sets.add("xlabel 'time'");
         sets.add("ylabel 'volume'");
@@ -186,30 +185,23 @@ public class GEJUnitTest {
         sets.add("xrange [0:100]");
         sets.add("yrange [0:20]");
         sets.add("style line 1 lc rgb '#0060ad' pt 7 ps 0.5 lt 1 lw 2");
-        
-        
+
         Plottable p = new PointsFunctionPlottable(
-                dados, 
-                op.toString(), 
-                sets, 
+                dados,
+                op.toString(),
+                sets,
                 CanonicalPath.getPath("data.txt"),
                 CanonicalPath.getPath("rep.plot"));
-        
+
         p.plot();
-        
-        
+
         List<String> functions = new ArrayList();
         functions.add("log(x**3) + sin(x)");
         functions.add(op.toString());
-    
+
         Plottable p2 = new FunctionPlottable(functions, sets, CanonicalPath.getPath("rep2.plot"));
         p2.plot();
-        
-        
-        
 
     }
-    
-    
-    
+
 }

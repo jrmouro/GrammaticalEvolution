@@ -16,7 +16,7 @@ import com.jrmouro.grammaticalevolution.operators.Less;
 import com.jrmouro.grammaticalevolution.operators.Ln;
 import com.jrmouro.grammaticalevolution.operators.VarOp;
 import com.jrmouro.grammaticalevolution.operators.ExpE;
-import com.jrmouro.grammaticalevolution.operators.GeneratorOp;
+import com.jrmouro.grammaticalevolution.operators.OpGenerator;
 import com.jrmouro.grammaticalevolution.operators.Pi;
 import org.junit.Test;
 
@@ -58,7 +58,7 @@ public class TestJUnitTest {
         Integer[] v = {123, 59, 125, 15, 38, 83, 43, 66, 76, 67};
         
         
-        GeneratorOp g = new GeneratorOp(ops, var);
+        OpGenerator g = new OpGenerator(ops, var);
         
         Op op = g.generate(v);
         

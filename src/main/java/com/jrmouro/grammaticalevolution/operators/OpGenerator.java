@@ -11,7 +11,7 @@ package com.jrmouro.grammaticalevolution.operators;
  *
  * @author ronaldo
  */
-public class GeneratorOp {
+public class OpGenerator implements Generator{
     
     protected final Op[] ops;
     final Var var;
@@ -19,18 +19,19 @@ public class GeneratorOp {
     private Integer height = Integer.MAX_VALUE;
 
         
-    public GeneratorOp(Op[] ops, Var var) {
+    public OpGenerator(Op[] ops, Var var) {
         this.ops = ops;
         this.var = var;
     }
     
-    public GeneratorOp(Op[] ops, Var var, Integer height) {
+    public OpGenerator(Op[] ops, Var var, Integer height) {
         this.ops = ops;
         this.var = var;
         this.height = height;
     }
     
     
+    @Override
     public Op generate(Integer[] vector){
         this.index = 0;
         if (this.ops != null)
@@ -55,6 +56,7 @@ public class GeneratorOp {
         }
 
         return aux;
+        
     }
     
 }

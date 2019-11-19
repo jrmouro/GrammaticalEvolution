@@ -6,6 +6,7 @@
 
 import com.jrmouro.genetic.chromosome.ChromosomeAbstract;
 import com.jrmouro.genetic.fitnessfunction.FitnessFunction;
+import com.jrmouro.genetic.integer.ChromosomeIntegerValidity;
 import com.jrmouro.genetic.integer.IntegerChromosome;
 import com.jrmouro.genetic.integer.IntegerGeneticAlgorithm;
 import com.jrmouro.genetic.integer.VectorPointsIntegerCrossover;
@@ -153,6 +154,13 @@ public class GEJUnitTest {
                 100, //population size
                 5, // population reuse
                 100, //population limit
+                new ChromosomeIntegerValidity(){
+            @Override
+            public boolean isRepresentationValid(List<Integer> representation) {
+                return true;
+            }
+                
+                },
                 fitI, // fitness function
                 100, //chromosome size
                 0, // left bound chromosome
